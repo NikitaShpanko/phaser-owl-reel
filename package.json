@@ -1,5 +1,5 @@
 {
-  "name": "phaser3-project-template",
+  "name": "phaser-owl-reel",
   "version": "1.1.2",
   "description": "A Phaser 3 Project Template",
   "main": "src/index.js",
@@ -9,20 +9,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/photonstorm/phaser3-project-template.git"
+    "url": "git+https://github.com/nikitashpanko/phaser-owl-reel.git"
   },
-  "author": "Richard Davey <rdavey@gmail.com> (http://www.photonstorm.com)",
+  "author": "Richard Davey <rdavey@gmail.com> (http://www.nikitashpanko.com)",
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "bugs": {
-    "url": "https://github.com/photonstorm/phaser3-project-template/issues"
+    "url": "https://github.com/nikitashpanko/phaser-owl-reel/issues"
   },
-  "homepage": "https://github.com/photonstorm/phaser3-project-template#readme",
+  "homepage": "https://nikitashpanko.github.io/phaser-owl-reel",
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.4.1",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
     "raw-loader": "^3.1.0",
