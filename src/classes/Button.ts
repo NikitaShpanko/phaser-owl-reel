@@ -28,6 +28,11 @@ export default class Button extends Phaser.GameObjects.Text {
     }
   }
 
+  clearState() {
+    this.setColor(colors.text)
+    this.scene.input.setDefaultCursor("auto")
+  }
+
   constructor(
     scene: Phaser.Scene,
     x: number,
@@ -49,8 +54,15 @@ export default class Button extends Phaser.GameObjects.Text {
     })
     this.on("pointerout", () => {
       this.#hover = false
-      this.setColor(colors.text)
-      this.scene.input.setDefaultCursor("auto")
+      this.clearState()
+    })
+    this.scene.input.keyboard.on("keydown-SPACE", (e: KeyboardEvent) => {
+      onClick()
+      if (!this.#hover) this.changeState()
+      e.preventDefault()
+    })
+    this.scene.input.keyboard.on("keyup-SPACE", () => {
+      if (!this.#hover) this.clearState()
     })
   }
 }

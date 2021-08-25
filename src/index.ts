@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import { screen } from "./config.json"
+import { screen, colors } from "./config.json"
 import Reel from "./classes/Reel"
 import Reels from "./classes/Reels"
 import Button from "./classes/Button"
@@ -10,6 +10,8 @@ class MyGame extends Phaser.Scene {
   }
 
   create() {
+    this.cameras.main.setBackgroundColor(colors.background)
+
     const reels = new Reels(
       this,
       screen.width / 2,
