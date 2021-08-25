@@ -9,7 +9,7 @@ const { baseMovement, indexMovement, randomMovement, backSpeedSlower } =
 export default class Reel extends Phaser.GameObjects.TileSprite {
   static counter = 0;
   static preload = function (scene) {
-    scene.load.spritesheet("elements", "../assets/" + element.sprite, {
+    scene.load.spritesheet("elements", "./assets/" + element.sprite, {
       frameWidth: element.width,
       frameHeight: element.height,
       endFrame: element.count,
