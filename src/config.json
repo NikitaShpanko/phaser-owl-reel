@@ -1,0 +1,36 @@
+{
+  "screen": {
+    "width": 1024,
+    "height": 768,
+    "reelYrel": 0.35,
+    "reelWidthRel": 0.9,
+    "buttonYrel": 0.8
+  },
+  "colors": {
+    "background": "#000000",
+    "text": "#ffffff",
+    "hover": "#ff4000",
+    "busy": "#ff0000"
+  },
+  "reel": {
+    "element": {
+      "sprite": "owls.png",
+      "width": 150,
+      "height": 150,
+      "count": 6
+    },
+    "length": 25,
+    "visibleLength": 3,
+    "animation": {
+      "duration": 3000,
+      "backSpeedSlower": 3,
+      "baseMovement": 1400,
+      "indexMovement": 300,
+      "randomMovement": 100,
+      "ease": "Elastic ease-in",
+      "easeBack": "Elastic ease-out",
+      "indexDelay": 50
+    }
+  },
+  "reelCount": 5
+}

@@ -1,29 +1,39 @@
 import Phaser from "phaser";
+import { screen, reel } from "./config.json";
+import Reel from "./classes/Reel";
+import Reels from "./classes/Reels";
+import Button from "./classes/Button";
 
 class MyGame extends Phaser.Scene {
   preload() {
-    this.load.image("logo", "./assets/logo.png");
+    Reel.preload(this);
   }
 
   create() {
-    const logo = this.add.image(400, 150, "logo");
+    const reels = this.add.reels(
+      screen.width / 2,
+      screen.height * screen.reelYrel,
+      screen.width * screen.reelWidthRel
+    );
 
-    this.tweens.add({
-      targets: logo,
-      y: 450,
-      duration: 2000,
-      ease: "Power2",
-      yoyo: true,
-      loop: -1,
-    });
+    const button = this.add.button(
+      screen.width / 2,
+      screen.height * screen.buttonYrel,
+      "Spin!",
+      () => {
+        reels.spin((spinState) => {
+          button.busy = spinState;
+        });
+      }
+    );
   }
 }
 
 const config = {
   type: Phaser.AUTO,
   parent: "phaser-example",
-  width: 800,
-  height: 600,
+  width: screen.width,
+  height: screen.height,
   scene: MyGame,
 };
 
