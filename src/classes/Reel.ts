@@ -6,9 +6,23 @@ const reelHeight = element.height * reel.length;
 const { baseMovement, indexMovement, randomMovement, backSpeedSlower } =
   animation;
 
+function loadTexture(scene: Phaser.Scene, index: number) {
+  const texName = `reel${index}`;
+  const tex = scene.textures.createCanvas(texName, element.width, reelHeight);
+  for (let i = 0; i < reel.length; i++) {
+    tex.drawFrame(
+      "elements",
+      Phaser.Math.Between(0, element.count - 1),
+      0,
+      element.height * i
+    );
+  }
+  return texName;
+}
+
 export default class Reel extends Phaser.GameObjects.TileSprite {
   static counter = 0;
-  static preload = function (scene) {
+  static preload = function (scene: Phaser.Scene) {
     scene.load.spritesheet("elements", "./assets/" + element.sprite, {
       frameWidth: element.width,
       frameHeight: element.height,
@@ -16,25 +30,21 @@ export default class Reel extends Phaser.GameObjects.TileSprite {
     });
   };
 
-  index;
-  baseMovement;
-  backDurationPerPixel;
+  index: number;
+  baseMovement: number;
+  backDurationPerPixel: number;
+  delay: number;
   isSpinning = false;
 
-  constructor(scene, x, y, index = Reel.counter) {
-    const texName = `reel${Reel.counter}`;
-    const tex = scene.textures.createCanvas(texName, element.width, reelHeight);
-
-    for (let i = 0; i < reel.length; i++) {
-      tex.drawFrame(
-        "elements",
-        Phaser.Math.Between(0, element.count - 1),
-        0,
-        element.height * i
-      );
-    }
-
-    super(scene, x, y, element.width, visibleLength * element.height, texName);
+  constructor(scene: Phaser.Scene, x: number, y: number, index = Reel.counter) {
+    super(
+      scene,
+      x,
+      y,
+      element.width,
+      visibleLength * element.height,
+      loadTexture(scene, index)
+    );
 
     this.index = index;
     this.baseMovement = baseMovement + indexMovement * this.index;
@@ -45,10 +55,10 @@ export default class Reel extends Phaser.GameObjects.TileSprite {
     Reel.counter++;
   }
 
-  spin(callback) {
+  spin(callback?: Function) {
     if (this.isSpinning) return;
     this.isSpinning = true;
-    if (typeof callback === "function") callback(true);
+    if (callback) callback(true);
 
     this.move(
       this.baseMovement + Phaser.Math.Between(0, randomMovement),
@@ -66,14 +76,20 @@ export default class Reel extends Phaser.GameObjects.TileSprite {
           animation.easeBack,
           () => {
             this.isSpinning = false;
-            if (typeof callback === "function") callback(false);
+            if (callback) callback(false);
           }
         );
       }
     );
   }
 
-  move(downY, delay, duration, ease, onComplete) {
+  move(
+    downY: number,
+    delay: number,
+    duration: number,
+    ease: string,
+    onComplete: Phaser.Types.Tweens.TweenOnCompleteCallback
+  ) {
     const curY = this.tilePositionY % reelHeight;
     this.scene.tweens.addCounter({
       from: curY,
@@ -89,9 +105,12 @@ export default class Reel extends Phaser.GameObjects.TileSprite {
   }
 }
 
-Phaser.GameObjects.GameObjectFactory.register("reel", function (x, y) {
-  const reel = new Reel(this.scene, x, y);
-  this.displayList.add(reel);
-  //   this.updateList.add(reel);
-  return reel;
-});
+Phaser.GameObjects.GameObjectFactory.register(
+  "reel",
+  function (this: Phaser.GameObjects.GameObjectFactory, x: number, y: number) {
+    const reel = new Reel(this.scene, x, y);
+    this.displayList.add(reel);
+    //   this.updateList.add(reel);
+    return reel;
+  }
+);

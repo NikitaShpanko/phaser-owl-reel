@@ -3,8 +3,10 @@ import Reel from "./Reel";
 import { reel, reelCount } from "../config.json";
 
 export default class Reels extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, width) {
-    const reelList = [];
+  list: Reel[];
+
+  constructor(scene: Phaser.Scene, x: number, y: number, width: number) {
+    let reelList: Reel[] = [];
     const widthDiff = width - reel.element.width;
     const minX = -widthDiff / 2;
     const stepX = widthDiff / (reelCount - 1);
@@ -15,27 +17,35 @@ export default class Reels extends Phaser.GameObjects.Container {
   }
 
   get isSpinning() {
-    return this.list.some((reel) => reel.isSpinning);
+    return this.list.some((reel: Reel) => reel.isSpinning);
   }
 
-  spin(callback) {
+  spin(callback?: Function) {
     if (this.isSpinning) return;
     let spinCount = 0;
-    if (typeof callback === "function") callback(true);
+    if (callback) callback(true);
 
     this.list.forEach((reel) => {
       reel.spin((spinState) => {
         if (spinState) spinCount++;
         else spinCount--;
-        if (!spinCount && typeof callback === "function") callback(false);
+        if (!spinCount && callback) callback(false);
       });
     });
   }
 }
 
-Phaser.GameObjects.GameObjectFactory.register("reels", function (x, y, width) {
-  const reels = new Reels(this.scene, x, y, width);
-  this.displayList.add(reels);
-  //   this.updateList.add(reel);
-  return reels;
-});
+Phaser.GameObjects.GameObjectFactory.register(
+  "reels",
+  function (
+    this: Phaser.GameObjects.GameObjectFactory,
+    x: number,
+    y: number,
+    width: number
+  ) {
+    const reels = new Reels(this.scene, x, y, width);
+    this.displayList.add(reels);
+    //   this.updateList.add(reel);
+    return reels;
+  }
+);

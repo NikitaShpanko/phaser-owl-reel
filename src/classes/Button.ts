@@ -28,9 +28,15 @@ export default class Button extends Phaser.GameObjects.Text {
     }
   }
 
-  constructor(scene, x, y, text, onClick) {
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    text: string,
+    onClick: Function
+  ) {
     super(scene, x, y, text, {
-      fontSize: 64,
+      fontSize: "64px",
       color: colors.text,
       align: "center",
     });
@@ -51,7 +57,13 @@ export default class Button extends Phaser.GameObjects.Text {
 
 Phaser.GameObjects.GameObjectFactory.register(
   "button",
-  function (x, y, text, onClick) {
+  function (
+    this: Phaser.GameObjects.GameObjectFactory,
+    x: number,
+    y: number,
+    text: string,
+    onClick: Function
+  ) {
     const button = new Button(this.scene, x, y, text, onClick);
     this.displayList.add(button);
     // this.updateList.add(button);

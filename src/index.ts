@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { screen, reel } from "./config.json";
+import { screen } from "./config.json";
 import Reel from "./classes/Reel";
 import Reels from "./classes/Reels";
 import Button from "./classes/Button";
@@ -10,18 +10,18 @@ class MyGame extends Phaser.Scene {
   }
 
   create() {
-    const reels = this.add.reels(
+    const reels: Reels = this.add["reels"](
       screen.width / 2,
       screen.height * screen.reelYrel,
       screen.width * screen.reelWidthRel
     );
 
-    const button = this.add.button(
+    const button: Button = this.add["button"](
       screen.width / 2,
       screen.height * screen.buttonYrel,
       "Spin!",
       () => {
-        reels.spin((spinState) => {
+        reels.spin((spinState: boolean) => {
           button.busy = spinState;
         });
       }

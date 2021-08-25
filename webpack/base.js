@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   mode: "development",
   devtool: "eval-source-map",
+  entry: path.resolve(__dirname, "../src/index.ts"),
   module: {
     rules: [
       {
@@ -17,6 +18,11 @@ module.exports = {
         },
       },
       {
+        test: /\.ts$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
         test: [/\.vert$/, /\.frag$/],
         use: "raw-loader",
       },
@@ -25,6 +31,12 @@ module.exports = {
         use: "file-loader",
       },
     ],
+  },
+  resolve: {
+    extensions: [".js", ".ts"],
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, "./dist"),
   },
   plugins: [
     new CopyWebpackPlugin({
