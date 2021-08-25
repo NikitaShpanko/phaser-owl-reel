@@ -1,4 +1,4 @@
-# Simple animation of spinning slot
+# [Simple animation](https://nikitashpanko.github.io/phaser-owl-reel/) of spinning slot
 
 Implemented using [Phaser 3](https://phaser.io/).
 
