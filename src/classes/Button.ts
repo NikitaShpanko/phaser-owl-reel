@@ -56,13 +56,21 @@ export default class Button extends Phaser.GameObjects.Text {
       this.#hover = false
       this.clearState()
     })
-    this.scene.input.keyboard.on("keydown-SPACE", (e: KeyboardEvent) => {
+    this.scene.input.keyboard.on("keydown", (e: KeyboardEvent) => {
+      if (!acceptedKeys(e)) return
       onClick()
       if (!this.#hover) this.changeState()
       e.preventDefault()
     })
-    this.scene.input.keyboard.on("keyup-SPACE", () => {
+    this.scene.input.keyboard.on("keyup", (e: KeyboardEvent) => {
+      if (!acceptedKeys(e)) return
       if (!this.#hover) this.clearState()
     })
   }
+}
+
+function acceptedKeys({ code, shiftKey, ctrlKey, altKey }: KeyboardEvent) {
+  return (
+    (code === "Enter" || code === "Space") && !(shiftKey || ctrlKey || altKey)
+  )
 }
